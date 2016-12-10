@@ -1,0 +1,340 @@
+<?php
+    header("Content-Type:text/html; charset=utf-8");
+    
+    $dbhost = '140.138.77.103';
+    $dbuser = 'BDSTeam30';
+    $dbpass = 'BDSTeam30@2015';
+    $dbname = 'BDSTeam30_DB';
+    $conn = mysql_connect($dbhost, $dbuser, $dbpass) or die('Error with MySQL connection');
+
+    mysql_query("SET NAMES 'UTF8'");
+    mysql_select_db($dbname);
+    
+    //$id = 's1001453';
+    //$user = 'Liu';
+    //$mail = 'Liu@gmail.com';
+    $str = "select * from rainData";
+    $result = mysql_query($str,$conn);
+    
+    for($i=0;$i<1000;$i++){
+        print_r(mysql_fetch_assoc($result));
+    }
+    mysql_close($conn);
+?>
+
+<!DOCTYPE HTML>
+<!--
+	Miniport by HTML5 UP
+	html5up.net | @n33co
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>旅遊路況一點通 | 預估您最佳出遊時間，遠離塞車</title>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="description" content="" />
+		<meta name="keywords" content="" />
+		<!--[if lte IE 8]><script src="css/ie/html5shiv.js"></script><![endif]-->
+		<script src="js/jquery.min.js"></script>
+		<script src="js/jquery.scrolly.min.js"></script>
+		<script src="js/skel.min.js"></script>
+		<script src="js/init.js"></script>
+
+
+		<!-- cal -->  
+		<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+		<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+		<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+		<noscript>
+			<link rel="stylesheet" href="css/skel.css" />
+			<link rel="stylesheet" href="css/style.css" />
+			<link rel="stylesheet" href="css/style-desktop.css" />
+		</noscript>
+		<!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
+		<!--[if lte IE 9]><link rel="stylesheet" href="css/ie/v9.css" /><![endif]-->
+	</head>
+	<body>
+
+		<!-- Nav -->
+			<nav id="nav">
+				<ul class="container">
+					<li><a href="#about">About</a></li>
+					<li><a href="#getstart">GetStart</a></li>
+					<li><a href="#professor">Team</a></li>
+					<li><a href="#contact">Contact</a></li>
+				</ul>
+			</nav>
+
+		<!-- Home -->
+			<div class="wrapper style1 first">
+				<article class="container" id="about">
+					<div class="row">
+						<div class="4u">
+							<span class="image fit"><img src="images/icon.png" alt="" /></span>
+						</div>
+						<div class="8u">
+							<header>
+								<h2> <strong>旅遊路況一點通</strong> | 預估您最佳出遊時間，遠離塞車</h2>
+							</header>
+							<p>本網頁將提供使用者<strong> 最佳旅遊日期 </strong>之推薦。透過歷史的國道交通流量資訊以及旅遊人潮的推估，能讓使用者遠離塞車人潮。參考資料由 <a href="http://1968.freeway.gov.tw/">高速公路局</a> 提供。
+							</p>
+							<a href="#getstart" class="button big scrolly">Try now</a>
+						</div>
+					</div>
+				</article>
+			</div>
+
+		<!-- getstart -->
+			<div class="wrapper style2">
+				<article id="getstart">
+					<header>
+						<h2>開始進行旅遊時機預測</h2></p>
+					</header>
+
+
+						<div class="row">
+							<div class="4u">
+								<section class="box style1">
+									<span class="icon featured fa-comments-o"></span>
+									<h3>請輸入出發地</h3>
+									<form>
+									<select name="YourLocation">
+									　<option value="Taipei">台北</option>
+									　<option value="Taoyuan">桃園</option>
+									　<option value="Hsinchu">新竹</option>
+									　<option value="Miaoli">苗栗</option>
+									</select>
+									</form>
+								</section>
+							</div>
+							<div class="4u">
+								<section class="box style1">
+									<span class="icon featured fa-camera-retro"></span>
+									<h3>請輸入目的地</h3>
+									<form>
+									<select onchange="window.open(this.options[this.selectedIndex].value)">
+									<optgroup selected="true" label="國道一號"> 
+									 <option value="http://tw.yahoo.com">基隆端</option>
+									 <option value="http://www.google.com">基隆</option>
+									 <option value="http://www.google.com">八堵</option>
+									<optgroup label="國一高架"> 
+									 <option value="http://www.youtube.com/">汐止</option>
+									 <optgroup label="國道三甲"> 
+									 <option value="http://www.pixnet.net/">台北端</option>
+									<option value="http://www.wretch.cc">萬芳</option> 
+									</form>
+									</select>
+								</section>
+							</div>
+
+
+							<div class="4u">
+								<section class="box style1">
+									<span class="icon featured fa-camera-retro"></span>
+									<h3>請輸入出發時間</h3>
+									<form>
+							<td width="35%">
+				                <input type="text" name="start" id="start" value="" readonly="true" title=""/>
+				            </td>
+				            <br>
+
+									</form>
+									</select>
+								</section>
+							</div>
+
+
+				            <script>
+						    var selDates = new Date();
+							$(function(){
+							    // 獲取調用控件的對象
+							    var dates = $("#start,#end");
+							    var option;
+							    //設置目標時間，因為例子中的開始時間和結束時間是有時間限制的
+							    var targetDate;
+							    var optionEnd;
+							    var targetDateEnd;
+
+							    //dates.datepicker({ dateFormat: "yy/mm/dd" });
+
+							    dates.datepicker(
+							    {
+							    	dateFormat: "yy/mm/dd",
+							        showButtonPanel:false,
+							        //當選擇時間的時候觸發此事件
+							        onSelect: function(selectedDate)
+							        {  
+							          if(this.id == "start")
+							          {
+							            // 如果是選擇了開始時間
+							            option = "minDate";
+							            //getTimeByDateStr 這個方法的代碼下面會貼出來的，就是處理時間的代碼
+
+							            var selectedTime = getTimeByDateStr(selectedDate);
+							            selDates = selectedDate;
+							            var minTime = selectedTime;
+							            targetDate = new Date(minTime);
+							            //設置結束時間
+							            optionEnd = "maxDate";
+							            targetDateEnd = new Date(minTime+2*24*60*60*1000);
+
+										//document.write( selectedDate );
+
+							          }
+							          //設置時間框中時間，比如根據選擇的開始時間，限制結束時間的不可選項,dates.not(this)是js選擇器使用，
+							          //datepicker("option", option, targetDate),這個就是日期控件封裝的api了
+							          dates.not(this).datepicker("option", option, targetDate);  
+							          dates.not(this).datepicker("option", optionEnd, targetDateEnd); 
+							        }
+
+							    });
+
+
+							});
+
+							//根據日期字符串取得其時間
+							function getTimeByDateStr(dateStr){
+							    var year = parseInt(dateStr.substring(0,4));
+							    var month = parseInt(dateStr.substring(5,7),10)-1;
+							    var day = parseInt(dateStr.substring(8,10),10);
+							    return new Date(year, month, day).getTime();
+							}
+
+							document.write(selDates);
+
+				            </script>
+
+
+
+								</section>
+							</div>
+
+					<footer>
+						<a href="#professor" class="button big scrolly">See the advisor profile </a>
+					</footer>
+						</div>
+
+
+				</article>
+			</div>
+
+		<!-- Professor -->
+			<div class="wrapper style3">
+				<article id="professor">
+					<header>
+						<h2>關於我們團隊</h2>
+					</header>
+										<div class="container">
+						<div class="row">
+							<div class="4u">
+								<section class="box style1">
+									<span class="icon featured fa-comments-o"></span>
+									<h3>楊適豪</h3>
+									<p>---------</p>
+								</section>
+							</div>
+							<div class="4u">
+								<section class="box style1">
+									<span class="icon featured fa-camera-retro"></span>
+									<h3>簡孝穎</h3>
+									<p>---------</p>
+								</section>
+							</div>
+							<div class="4u">
+								<section class="box style1">
+									<span class="icon featured fa-thumbs-o-up"></span>
+									<h3>陳恒劭</h3>
+									<p>---------</p>
+								</section>
+							</div>
+
+						</div>
+					</div>
+
+					<footer>
+						<a href="#contact" class="button big scrolly">Get in touch with our team</a>
+					</footer>
+				</article>
+			</div>
+
+		<!-- Contact -->
+			<div class="wrapper style4">
+				<article id="contact" class="container 75%">
+					<header>
+						<h2>聯絡我們</h2>
+						<p>歡迎隨時透過下面表格與我們團隊進行聯繫，我們將會盡快回復。</p>
+					</header>
+					<div>
+						<div class="row">
+							<div class="12u">
+								<form method="post" action="#">
+									<div>
+										<div class="row">
+											<div class="6u">
+												<input type="text" name="name" id="name" placeholder="Name" />
+											</div>
+											<div class="6u">
+												<input type="text" name="email" id="email" placeholder="Email" />
+											</div>
+										</div>
+										<div class="row">
+											<div class="12u">
+												<input type="text" name="subject" id="subject" placeholder="Subject" />
+											</div>
+										</div>
+										<div class="row">
+											<div class="12u">
+												<textarea name="message" id="message" placeholder="Message"></textarea>
+											</div>
+										</div>
+										<div class="row 200%">
+											<div class="12u">
+												<ul class="actions">
+													<li><input type="submit" value="Send Message" /></li>
+													<li><input type="reset" value="Clear Form" class="alt" /></li>
+												</ul>
+											</div>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+						<div class="row">
+							<div class="12u">
+								<hr />
+								<h3>Find me on ...</h3>
+								<ul class="social">
+									<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+									<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+									<li><a href="#" class="icon fa-dribbble"><span class="label">Dribbble</span></a></li>
+									<li><a href="#" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li>
+									<li><a href="#" class="icon fa-tumblr"><span class="label">Tumblr</span></a></li>
+									<li><a href="#" class="icon fa-google-plus"><span class="label">Google+</span></a></li>
+									<li><a href="#" class="icon fa-github"><span class="label">Github</span></a></li>
+									<!--
+									<li><a href="#" class="icon fa-rss"><span>RSS</span></a></li>
+									<li><a href="#" class="icon fa-instagram"><span>Instagram</span></a></li>
+									<li><a href="#" class="icon fa-foursquare"><span>Foursquare</span></a></li>
+									<li><a href="#" class="icon fa-skype"><span>Skype</span></a></li>
+									<li><a href="#" class="icon fa-soundcloud"><span>Soundcloud</span></a></li>
+									<li><a href="#" class="icon fa-youtube"><span>YouTube</span></a></li>
+									<li><a href="#" class="icon fa-blogger"><span>Blogger</span></a></li>
+									<li><a href="#" class="icon fa-flickr"><span>Flickr</span></a></li>
+									<li><a href="#" class="icon fa-vimeo"><span>Vimeo</span></a></li>
+									-->
+								</ul>
+								<hr />
+							</div>
+						</div>
+					</div>
+					<footer>
+						<ul id="copyright">
+							<li>&copy; Untitled. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+						</ul>
+					</footer>
+				</article>
+			</div>
+
+	</body>
+</html>
